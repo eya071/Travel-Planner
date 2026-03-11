@@ -1,10 +1,28 @@
-# Travel-Planner
-Prosjektnavn: Travel Planner
+# Travel Planner
 
-Beskrivelse:
-Travel Planner er en webapplikasjon som hjelper brukere med å planlegge reiser. 
-Brukeren kan opprette en reise, legge til reisemål, datoer og aktiviteter. 
-Systemet lagrer informasjonen i en database og kan også vise ekstra informasjon 
-som værdata fra eksterne API-er.
+## Oversikt
+Travel Planner er en webapplikasjon hvor brukere kan planlegge reiser. 
+Brukeren kan legge inn reisemål, datoer og aktiviteter. Systemet kan også hente informasjon om reisemål, for eksempel værdata fra eksterne tjenester.
 
-Målet med prosjektet er å demonstrere ferdigheter innen utvikling, drift og brukerstøtte.
+Prosjektet er laget som en del av en IT-prosjektoppgave og demonstrerer ferdigheter innen utvikling, drift og brukerstøtte.
+
+## Teknologier
+
+Frontend:
+- Angular
+- HTML
+- CSS
+
+Backend:
+- Python
+- Flask
+
+Database:
+- MariaDB
+
+## Funksjoner
+
+- Opprette en reise
+- Lagre reiser i database
+- Legge til aktiviteter i reisen
+- Vise informasjon om reisemål
