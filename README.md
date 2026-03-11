@@ -37,3 +37,7 @@ Database:
 - Lagre reiser i database
 - Legge til aktiviteter i reisen
 - Vise informasjon om reisemål
+
+## Systemarkitektur
+
+![Systemarkitektur](docs/systemarkitektur.png)
