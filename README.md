@@ -40,4 +40,4 @@ Database:
 
 ## Systemarkitektur
 
-![Systemarkitektur](docs/systemarkitektur.png)
+![Systemarkitektur](docssystemarkitektur.png.png)
