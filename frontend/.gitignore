@@ -1,0 +1,52 @@
+# =========================
+# ENV (VERY IMPORTANT)
+# =========================
+.env
+
+# =========================
+# NODE / ANGULAR
+# =========================
+node_modules/
+.angular/
+dist/
+out-tsc/
+coverage/
+
+npm-debug.log
+yarn-error.log
+
+# =========================
+# PYTHON (BACKEND)
+# =========================
+__pycache__/
+*.pyc
+
+# =========================
+# IDE / EDITORS
+# =========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.idea/
+.project
+.classpath
+.settings/
+
+# =========================
+# SYSTEM FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# OTHER
+# =========================
+tmp/
+.sass-cache/
+connect.lock
+libpeerconnection.log
+testem.log
+typings/
