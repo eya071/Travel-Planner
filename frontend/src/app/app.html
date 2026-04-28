@@ -3,27 +3,57 @@
     <h1>Smart Reise <span>Planlegger</span></h1>
     <p>Planlegg reisen din på sekunder ✈️</p>
 
-    <div class="card">
-      <input type="text" placeholder="Skriv destinasjon..." />
+    <!-- INPUT -->
+    <div *ngIf="!trip" class="card">
+      <input type="text" [(ngModel)]="destination" placeholder="Skriv land..." />
 
       <div class="row">
-        <input type="number" placeholder="Antall dager" />
+        <input type="date" [(ngModel)]="startDate" />
+        <input type="date" [(ngModel)]="endDate" />
+      </div>
 
-        <select>
+      <div class="row">
+        <input type="number" [(ngModel)]="people" placeholder="Antall personer" />
+
+        <select [(ngModel)]="budget">
           <option value="low">💸 Lavt budsjett</option>
-          <option value="medium" selected>💼 Middels budsjett</option>
+          <option value="medium">💼 Middels budsjett</option>
           <option value="high">💎 Høyt budsjett</option>
         </select>
       </div>
 
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" checked />
-          Inkluder hotell
-        </label>
+      <button (click)="generateTrip()">✨ Generer reisen</button>
+    </div>
+
+    <!-- RESULTAT -->
+    <div *ngIf="trip" class="result">
+      <h2>✈️ Reise til {{ trip.destination }}</h2>
+      <p>📅 {{ trip.start_date }} → {{ trip.end_date }}</p>
+      <p>👥 {{ trip.people }} personer</p>
+      <p>💰 Budsjett: {{ trip.budget }}</p>
+
+      <!-- 📅 PLAN -->
+      <div *ngIf="trip.plan">
+        <h3>📅 Reiseplan</h3>
+
+        <div *ngFor="let day of trip.plan">
+          <p>
+            <strong>Dag {{ day.day }}</strong> ({{ day.date }})
+          </p>
+          <p>👉 {{ day.activity }}</p>
+          <hr />
+        </div>
+      </div>
+      <!-- 💰 PRIS -->
+      <div *ngIf="trip.price">
+        <h3>💰 Pris</h3>
+        <p>✈️ Fly: {{ trip.price.flight }} kr</p>
+        <p>🏨 Hotell: {{ trip.price.hotel }} kr</p>
+        <p>🍝 Mat: {{ trip.price.food }} kr</p>
+        <h4>Total: {{ trip.price.total }} kr</h4>
       </div>
 
-      <button>✨ Generer reisen</button>
+      <button (click)="trip = null">🔙 Lag ny reise</button>
     </div>
   </div>
 </div>
