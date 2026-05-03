@@ -1,0 +1,152 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* BACKGROUND */
+.hero {
+  height: 100vh;
+  width: 100%;
+  background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470') center/cover
+    no-repeat;
+}
+
+/* OVERLAY */
+.overlay {
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.65);
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center; /* 🔥 CENTER VERTICALLY */
+  align-items: center; /* 🔥 CENTER HORIZONTALLY */
+
+  gap: 20px; /* space between title and card */
+  padding: 20px;
+}
+
+/* TITLE */
+.main-title {
+  font-size: 32px;
+  margin: 0; /* 🔥 remove extra space */
+}
+
+/* INPUT */
+.card {
+  background: rgba(0, 0, 0, 0.75);
+  padding: 20px;
+  border-radius: 20px;
+  width: 360px;
+  margin: 0;
+  transform: translateY(-20px);
+}
+
+/* ROW */
+.row {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+input,
+select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* BUTTON */
+button {
+  background: #19b6b6;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  width: 200px;
+}
+
+/* RESULT */
+.result {
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* HEADER */
+.trip-header {
+  margin: 5px 0;
+}
+
+/* GRID */
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+/* CARD */
+.day-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 90px;
+}
+
+.day-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.day-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* TEXT */
+.overlay-text {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+}
+
+/* PRICE */
+.price-box {
+  width: 260px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  text-align: center;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* BOTTOM */
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,11 +1,10 @@
 <div class="hero">
   <div class="overlay">
-    <h1>Smart Reise <span>Planlegger</span></h1>
-    <p>Planlegg reisen din på sekunder ✈️</p>
+    <h1 class="main-title">Smart Reise Planlegger ✈️</h1>
 
     <!-- INPUT -->
     <div *ngIf="!trip" class="card">
-      <input type="text" [(ngModel)]="destination" placeholder="Skriv land..." />
+      <input [(ngModel)]="destination" placeholder="Land..." />
 
       <div class="row">
         <input type="date" [(ngModel)]="startDate" />
@@ -13,47 +12,72 @@
       </div>
 
       <div class="row">
-        <input type="number" [(ngModel)]="people" placeholder="Antall personer" />
+        <input type="number" [(ngModel)]="people" placeholder="Personer" />
 
         <select [(ngModel)]="budget">
-          <option value="low">💸 Lavt budsjett</option>
-          <option value="medium">💼 Middels budsjett</option>
-          <option value="high">💎 Høyt budsjett</option>
+          <option value="low">Lav</option>
+          <option value="medium">Medium</option>
+          <option value="high">Høy</option>
         </select>
       </div>
 
-      <button (click)="generateTrip()">✨ Generer reisen</button>
+      <button (click)="generateTrip()">Generer</button>
     </div>
 
-    <!-- RESULTAT -->
+    <!-- RESULT -->
     <div *ngIf="trip" class="result">
-      <h2>✈️ Reise til {{ trip.destination }}</h2>
-      <p>📅 {{ trip.start_date }} → {{ trip.end_date }}</p>
-      <p>👥 {{ trip.people }} personer</p>
-      <p>💰 Budsjett: {{ trip.budget }}</p>
+      <!-- HEADER -->
+      <div class="trip-header">
+        <h2>{{ trip.destination }}</h2>
+        <p>{{ trip.start_date }} → {{ trip.end_date }}</p>
+        <p>{{ trip.people }} personer • {{ trip.budget }}</p>
+      </div>
 
-      <!-- 📅 PLAN -->
-      <div *ngIf="trip.plan">
-        <h3>📅 Reiseplan</h3>
+      <!-- CONTENT GRID -->
+      <div class="content">
+        <!-- LEFT: PLAN -->
+        <div class="plan-grid">
+          <div *ngFor="let day of trip.plan" class="day-card">
+            <img
+              [src]="day.image"
+              (error)="day.image = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'"
+            />
 
-        <div *ngFor="let day of trip.plan">
-          <p>
-            <strong>Dag {{ day.day }}</strong> ({{ day.date }})
-          </p>
-          <p>👉 {{ day.activity }}</p>
-          <hr />
+            <div class="overlay-text">
+              <h4>Dag {{ day.day }}</h4>
+              <p>{{ day.title }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: SIDE -->
+        <div class="side-box">
+          <div class="price-box">
+            <h3>💰 Pris</h3>
+
+            <div class="price-row">
+              <span>Fly</span>
+              <span>{{ trip.price.flight }} kr</span>
+            </div>
+
+            <div class="price-row">
+              <span>Hotell</span>
+              <span>{{ trip.price.hotel }} kr</span>
+            </div>
+
+            <div class="price-row">
+              <span>Mat</span>
+              <span>{{ trip.price.food }} kr</span>
+            </div>
+
+            <hr />
+
+            <div class="total">{{ trip.price.total }} kr</div>
+          </div>
+
+          <button (click)="trip = null">Ny reise</button>
         </div>
       </div>
-      <!-- 💰 PRIS -->
-      <div *ngIf="trip.price">
-        <h3>💰 Pris</h3>
-        <p>✈️ Fly: {{ trip.price.flight }} kr</p>
-        <p>🏨 Hotell: {{ trip.price.hotel }} kr</p>
-        <p>🍝 Mat: {{ trip.price.food }} kr</p>
-        <h4>Total: {{ trip.price.total }} kr</h4>
-      </div>
-
-      <button (click)="trip = null">🔙 Lag ny reise</button>
     </div>
   </div>
 </div>

@@ -19,23 +19,27 @@ export class AppComponent {
   trip: any = null;
 
   generateTrip() {
-    fetch('http://127.0.0.1:5000/trips', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        destination: this.destination,
-        start_date: this.startDate,
-        end_date: this.endDate,
-        people: this.people,
-        budget: this.budget,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('Trip:', data);
-        this.trip = data;
-      });
+    // 🔥 Tving Angular til å oppdatere
+    this.trip = null;
+
+    setTimeout(() => {
+      fetch('http://127.0.0.1:5000/trips', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          destination: this.destination,
+          start_date: this.startDate,
+          end_date: this.endDate,
+          people: this.people,
+          budget: this.budget,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.trip = data;
+        });
+    }, 100);
   }
 }
