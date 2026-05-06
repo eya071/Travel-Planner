@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TripService } from './trip.service';
+import { HttpClient } from '@angular/common/http'; // 🔥 LEGG TIL
 
 @Component({
   selector: 'app-root',
@@ -18,28 +20,48 @@ export class AppComponent {
 
   trip: any = null;
 
+  // 🔥 LEGG TIL
+  images: string[] = [];
+
+  constructor(
+    private tripService: TripService,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone,
+    private http: HttpClient, // 🔥 LEGG TIL
+  ) {}
+
   generateTrip() {
-    // 🔥 Tving Angular til å oppdatere
     this.trip = null;
 
-    setTimeout(() => {
-      fetch('http://127.0.0.1:5000/trips', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+    this.zone.run(() => {
+      this.tripService
+        .generateTrip({
           destination: this.destination,
           start_date: this.startDate,
           end_date: this.endDate,
           people: this.people,
           budget: this.budget,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
+        })
+        .subscribe((data) => {
           this.trip = data;
+          this.cdr.detectChanges();
+
+          // 🔥 LEGG TIL HER
+          this.loadImages(this.destination);
         });
-    }, 100);
+    });
+  }
+
+  // 🔥 LEGG TIL
+  loadImages(place: string) {
+    this.http
+      .get(`https://api.pexels.com/v1/search?query=${place}&per_page=3`, {
+        headers: {
+          Authorization: 'DIN_API_KEY',
+        },
+      })
+      .subscribe((res: any) => {
+        this.images = res.photos.map((p: any) => p.src.medium);
+      });
   }
 }

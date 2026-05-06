@@ -1,83 +1,171 @@
-<div class="hero">
-  <div class="overlay">
-    <h1 class="main-title">Smart Reise Planlegger ✈️</h1>
+<div class="travel-app">
+  <div class="ambient ambient-top"></div>
+  <div class="ambient ambient-bottom"></div>
 
-    <!-- INPUT -->
-    <div *ngIf="!trip" class="card">
-      <input [(ngModel)]="destination" placeholder="Land..." />
+  <main class="page-shell" [class.results-mode]="trip">
+    <!-- HERO -->
+    <section class="hero-copy">
+      <p class="eyebrow">Luksus reiseplanlegging</p>
+      <h1>Smart Reise Planlegger</h1>
 
-      <div class="row">
-        <input type="date" [(ngModel)]="startDate" />
-        <input type="date" [(ngModel)]="endDate" />
+      <p class="lead">
+        Skreddersydde reiseplaner, forbedret design og en roligere premium mørk opplevelse fra valg
+        av reisemål til fullstendig reiseoversikt.
+      </p>
+
+      <div class="hero-metrics" *ngIf="!trip">
+        <div class="metric-pill">
+          <span class="metric-label">Stemning</span>
+          <strong>Premium mørk</strong>
+        </div>
+
+        <div class="metric-pill">
+          <span class="metric-label">Planlegging</span>
+          <strong>Elegant og rask</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section *ngIf="!trip" class="planner-card glass-panel">
+      <div class="panel-header">
+        <p class="panel-kicker">Planlegg din neste reise</p>
+        <h2>Bygg en reise med bedre flyt</h2>
+
+        <p class="panel-subtitle">
+          Velg reisemål, datoer, reisefølge og budsjett for å generere en komplett plan.
+        </p>
       </div>
 
-      <div class="row">
-        <input type="number" [(ngModel)]="people" placeholder="Personer" />
+      <div class="form-grid">
+        <label class="field field-full">
+          <span>Destinasjon</span>
+          <input [(ngModel)]="destination" placeholder="F.eks. Japan, Italia eller Bali" />
+        </label>
 
-        <select [(ngModel)]="budget">
-          <option value="low">Lav</option>
-          <option value="medium">Medium</option>
-          <option value="high">Høy</option>
-        </select>
+        <label class="field">
+          <span>Fra dato</span>
+          <input type="date" [(ngModel)]="startDate" />
+        </label>
+
+        <label class="field">
+          <span>Til dato</span>
+          <input type="date" [(ngModel)]="endDate" />
+        </label>
+
+        <label class="field">
+          <span>Antall personer</span>
+          <input type="number" [(ngModel)]="people" placeholder="Personer" />
+        </label>
+
+        <label class="field">
+          <span>Budsjett</span>
+          <select [(ngModel)]="budget">
+            <option value="low">Lav</option>
+            <option value="medium">Medium</option>
+            <option value="high">Høy</option>
+          </select>
+        </label>
       </div>
 
-      <button (click)="generateTrip()">Generer</button>
-    </div>
+      <div class="card-footer">
+        <button class="primary-button" (click)="generateTrip()">Generer reise</button>
+      </div>
+    </section>
 
     <!-- RESULT -->
-    <div *ngIf="trip" class="result">
-      <!-- HEADER -->
-      <div class="trip-header">
-        <h2>{{ trip.destination }}</h2>
-        <p>{{ trip.start_date }} → {{ trip.end_date }}</p>
-        <p>{{ trip.people }} personer • {{ trip.budget }}</p>
+    <section *ngIf="trip" class="results-screen">
+      <div class="results-header glass-panel">
+        <div>
+          <p class="panel-kicker">Reiseoversikt</p>
+          <h2>{{ trip.destination }}</h2>
+
+          <p class="results-subtitle">
+            En raffinert oversikt over hele reisen din, med fokus på dagsplan og kostnader.
+          </p>
+        </div>
+
+        <div class="trip-facts">
+          <div class="fact-chip">
+            <span>Periode</span>
+            <strong>{{ trip.start_date }} → {{ trip.end_date }}</strong>
+          </div>
+
+          <div class="fact-chip">
+            <span>Reisende</span>
+            <strong>{{ trip.people }} personer</strong>
+          </div>
+
+          <div class="fact-chip">
+            <span>Budsjett</span>
+            <strong>{{ trip.budget }}</strong>
+          </div>
+        </div>
       </div>
 
-      <!-- CONTENT GRID -->
-      <div class="content">
-        <!-- LEFT: PLAN -->
-        <div class="plan-grid">
-          <div *ngFor="let day of trip.plan" class="day-card">
-            <img
-              [src]="day.image"
-              (error)="day.image = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'"
-            />
-
-            <div class="overlay-text">
-              <h4>Dag {{ day.day }}</h4>
-              <p>{{ day.title }}</p>
+      <div class="results-layout">
+        <!-- PLAN -->
+        <div class="itinerary-section">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Dag for dag</p>
+              <h3>Reiseplan</h3>
             </div>
+          </div>
+
+          <div class="plan-grid">
+            <article *ngFor="let day of trip.plan" class="day-card glass-panel">
+              <div class="day-image-wrap">
+                <img
+                  [src]="day.image"
+                  (error)="
+                    day.image = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'
+                  "
+                />
+                <div class="image-scrim"></div>
+                <div class="day-badge">Dag {{ day.day }}</div>
+              </div>
+
+              <div class="day-content">
+                <p class="day-label">Opplevelse</p>
+                <h4>{{ day.title }}</h4>
+                <p>{{ day.description }}</p>
+              </div>
+            </article>
           </div>
         </div>
 
-        <!-- RIGHT: SIDE -->
-        <div class="side-box">
-          <div class="price-box">
-            <h3>💰 Pris</h3>
+        <!-- SUMMARY -->
+        <aside class="summary-column">
+          <div class="summary-card glass-panel">
+            <h3>Prisestimat</h3>
 
-            <div class="price-row">
-              <span>Fly</span>
-              <span>{{ trip.price.flight }} kr</span>
+            <div class="summary-total">
+              <span>Totalt</span>
+              <strong>{{ trip.price.total }} kr</strong>
             </div>
 
-            <div class="price-row">
-              <span>Hotell</span>
-              <span>{{ trip.price.hotel }} kr</span>
+            <div class="price-list">
+              <div class="price-row">
+                <span>Fly</span>
+                <strong>{{ trip.price.flight }} kr</strong>
+              </div>
+
+              <div class="price-row">
+                <span>Hotell</span>
+                <strong>{{ trip.price.hotel }} kr</strong>
+              </div>
+
+              <div class="price-row">
+                <span>Mat</span>
+                <strong>{{ trip.price.food }} kr</strong>
+              </div>
             </div>
-
-            <div class="price-row">
-              <span>Mat</span>
-              <span>{{ trip.price.food }} kr</span>
-            </div>
-
-            <hr />
-
-            <div class="total">{{ trip.price.total }} kr</div>
           </div>
 
-          <button (click)="trip = null">Ny reise</button>
-        </div>
+          <button class="secondary-button" (click)="trip = null">Planlegg ny reise</button>
+        </aside>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 </div>
